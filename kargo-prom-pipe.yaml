@@ -1,0 +1,39 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: PromotionPipeline
+metadata:
+  name: demo-pipeline
+  namespace: kargo
+spec:
+  stages:
+    - name: dev
+      subscriptions:
+        - image:
+            repoURL: docker.io/library/nginx
+      promotionMechanisms:
+        - gitRepo:
+            repoURL: https://github.com/your-org/demo-app-configs
+            writeBranch: main
+            kustomize:
+              path: dev
+    - name: staging
+      subscriptions:
+        - upstreamStage: dev
+      promotionMechanisms:
+        - gitRepo:
+            repoURL: https://github.com/your-org/demo-app-configs
+            writeBranch: main
+            kustomize:
+              path: staging
+      verification:
+        - manual: {} # kräver manuell godkännande
+    - name: prod
+      subscriptions:
+        - upstreamStage: staging
+      promotionMechanisms:
+        - gitRepo:
+            repoURL: https://github.com/your-org/demo-app-configs
+            writeBranch: main
+            kustomize:
+              path: prod
+      verification:
+        - manual: {}
