@@ -1,56 +1,29 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Application
+kind: ApplicationSet
 metadata:
-  name: demo-dev
+  name: kargo-demo
   namespace: argocd
 spec:
-  project: default
-  source:
-    repoURL: https://github.com/trappiz/conoa-kargo-demo
-    targetRevision: main
-    path: dev
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: demo-dev
-  syncPolicy:
-    automated: {}
-    syncOptions:
-    - CreateNamespace=true
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: demo-staging
-  namespace: argocd
-spec:
-  project: default
-  source:
-    repoURL: https://github.com/trappiz/conoa-kargo-demo
-    targetRevision: main
-    path: staging
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: demo-staging
-  syncPolicy:
-    automated: {}
-    syncOptions:
-    - CreateNamespace=true
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: demo-prod
-  namespace: argocd
-spec:
-  project: default
-  source:
-    repoURL: https://github.com/trappiz/conoa-kargo-demo
-    targetRevision: main
-    path: prod
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: demo-prod
-  syncPolicy:
-    automated: {}
-    syncOptions:
-    - CreateNamespace=true
+  generators:
+  - list:
+      elements:
+      - stage: dev
+      - stage: staging
+      - stage: prod
+  template:
+    metadata:
+      name: kargo-demo-{{stage}}
+      annotations:
+        kargo.akuity.io/authorized-stage: kargo-demo:{{stage}}
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/trappiz/conoa-kargo-demo.git
+        targetRevision: main
+        path: .
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: demo-{{stage}}
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true
