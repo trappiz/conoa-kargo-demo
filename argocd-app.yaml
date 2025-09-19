@@ -12,7 +12,7 @@ spec:
       - stage: prod
   template:
     metadata:
-      name: kargo-demo-{{stage}}
+      name: demo-{{stage}}
       annotations:
         kargo.akuity.io/authorized-stage: kargo-demo:{{stage}}
     spec:
@@ -20,7 +20,7 @@ spec:
       source:
         repoURL: https://github.com/trappiz/conoa-kargo-demo.git
         targetRevision: main
-        path: env/{{.stage}}
+        path: env/{{stage}}
       destination:
         server: https://kubernetes.default.svc
         namespace: demo-{{stage}}
