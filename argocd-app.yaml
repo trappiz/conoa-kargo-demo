@@ -20,7 +20,7 @@ spec:
       source:
         repoURL: https://github.com/trappiz/conoa-kargo-demo.git
         targetRevision: main
-        path: .
+        path: env/{{.stage}}
       destination:
         server: https://kubernetes.default.svc
         namespace: demo-{{stage}}
