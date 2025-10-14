@@ -25,5 +25,7 @@ spec:
         server: https://kubernetes.default.svc
         namespace: demo-{{stage}}
       syncPolicy:
+        automated:
+          enabled: true
         syncOptions:
         - CreateNamespace=true
