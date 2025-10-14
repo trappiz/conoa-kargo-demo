@@ -5,6 +5,3 @@ resources:
 namespace: demo-dev
 commonLabels:
   env: dev
-images:
-- name: nginx
-  newTag: 1.29.2
