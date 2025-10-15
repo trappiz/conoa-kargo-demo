@@ -176,3 +176,4 @@ spec:
   - image:
       repoURL: nginx
       imageSelectionStrategy: SemVer
+      constraint: ^1.29.0
