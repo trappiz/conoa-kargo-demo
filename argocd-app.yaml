@@ -25,7 +25,8 @@ spec:
         server: https://kubernetes.default.svc
         namespace: demo-{{stage}}
       syncPolicy:
-        automated:
-          enabled: true
+      # Let Kargo sync the argo app
+#        automated:
+#          enabled: true
         syncOptions:
         - CreateNamespace=true
