@@ -5,6 +5,3 @@ resources:
 namespace: demo-staging
 commonLabels:
   env: staging
-images:
-- name: nginx
-  newTag: 1.29.2
