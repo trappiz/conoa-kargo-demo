@@ -1,5 +1,31 @@
 # Conoa-Kargo-Demo
 
+
+# Installera cert-manager
+### Skapa namespace
+```bash
+kubectl create namespace cert-manager
+```
+
+### Installera med den officiella Helm-charten
+```bash
+helm repo add jetstack https://charts.jetstack.io
+helm repo update
+```
+
+### Installera cert-manager (inklusive CRDs)
+```bash
+helm install cert-manager jetstack/cert-manager \
+  --create-namespace \
+  --namespace cert-manager \
+  --set installCRDs=true
+```
+
+### Kontrollera status
+```bash
+kubectl -n cert-manager get pods
+```
+
 # ArgoCD install
 ### Skapa namespace för Argo CD
 ```bash
@@ -50,35 +76,6 @@ kubectl apply -n argo-rollouts -f https://github.com/argoproj/argo-rollouts/rele
 ```bash
 kubectl -n argo-rollouts get pods
 ```
-
-
-
-
-# Installera cert-manager
-### Skapa namespace
-```bash
-kubectl create namespace cert-manager
-```
-
-### Installera med den officiella Helm-charten
-```bash
-helm repo add jetstack https://charts.jetstack.io
-helm repo update
-```
-
-### Installera cert-manager (inklusive CRDs)
-```bash
-helm install cert-manager jetstack/cert-manager \
-  --create-namespace \
-  --namespace cert-manager \
-  --set installCRDs=true
-```
-
-### Kontrollera status
-```bash
-kubectl -n cert-manager get pods
-```
-
 
 
 # Installera Kargo
