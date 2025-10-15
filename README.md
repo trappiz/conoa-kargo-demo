@@ -18,7 +18,7 @@ helm repo update
 helm install cert-manager jetstack/cert-manager \
   --create-namespace \
   --namespace cert-manager \
-  --set installCRDs=true
+  --set crds.enabled=true
 ```
 
 ### Kontrollera status
@@ -92,7 +92,7 @@ helm install kargo \
   --namespace kargo \
   --create-namespace \
   --set api.adminAccount.passwordHash='$2a$10$Zrhhie4vLz5ygtVSaif6o.qN36jgs6vjtMBdM6yrU1FOeiAAMMxOm' \
-  --set api.adminAccount.tokenSigningKey=iwishtowashmyirishwristwatch \
+  --set api.adminAccount.tokenSigningKey=thisisjustfordemopurpose \
   --wait
 ```
 
