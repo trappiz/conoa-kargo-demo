@@ -103,9 +103,12 @@ Rättigheter som behövs:
 ### Skapa git credentials
 ```bash
 ### Behövs för att Kargo ska kunna göra commits, push, pull och pull requests
-kargo create credentials github-creds \
-  --project kargo-demo \
-  --git \
-  --username trappiz \
-  --repo-url https://github.com/trappiz/conoa-kargo-demo.git
+# kargo create credentials github-creds \
+#  --project kargo-demo \
+#  --git \
+#  --username trappiz \
+#  --repo-url https://github.com/trappiz/conoa-kargo-demo.git
+
+### Färdig secret för ovan 
+kubectl apply -f kargo-git-creds.yaml
 ```
