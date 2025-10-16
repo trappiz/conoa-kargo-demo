@@ -32,7 +32,7 @@ spec:
   - name: branch
     value: main
   - name: image
-    value: nginx
+    value: quay.io/ceph/nginx
   - name: openpr
     value: "false"
   steps:
@@ -44,6 +44,7 @@ spec:
       checkout:
       - branch: ${{ vars.branch }}
         path: ./src
+
   # Update the image in the Kustomize configuration located at .env/<stage>
   # in the repository.
   - uses: kustomize-set-image
@@ -53,12 +54,14 @@ spec:
       images:
       - image: ${{ vars.image }}
         tag: ${{ imageFrom( vars.image ).Tag }}
+
   # Commit the changes to the Git repository.
   - uses: git-commit
     as: commit
     config:
       path: ./src
       message: ${{ task.outputs['update-image'].commitMessage }}
+
   # Push the changes to the Git repository.
   - uses: git-push
     if: ${{ vars.openpr != 'true' }}
@@ -72,6 +75,7 @@ spec:
     config:
       path: ./src
       generateTargetBranch: true
+
   # Open a pull request to merge the changes into the main branch.
   - uses: git-open-pr
     as: open-pr
@@ -81,6 +85,7 @@ spec:
       createTargetBranch: true
       sourceBranch: ${{ task.outputs.push.branch }}
       targetBranch: ${{ vars.branch }}
+
   # Wait for the pull request to be merged.
   - uses: git-wait-for-pr
     as: wait-for-pr
@@ -89,9 +94,7 @@ spec:
       repoURL: ${{ vars.repoURL }}
       prNumber: ${{ task.outputs['open-pr'].pr.id }}
 
-  # If you have an Argo CD Application that should be synced after the Git
-  # repository is updated, uncomment the following lines and specify the
-  # app name.
+  # Sync Argo CD Application after the Git repository is updated,
   - uses: argocd-update
     config:
       apps:
@@ -174,6 +177,6 @@ metadata:
 spec:
   subscriptions:
   - image:
-      repoURL: nginx
+      repoURL: quay.io/ceph/nginx
       imageSelectionStrategy: SemVer
-      constraint: ^1.29.0
+      constraint: ^1.27.0
