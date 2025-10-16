@@ -77,6 +77,7 @@ helm install kargo \
 kubectl -n kargo get pods
 
 ### Skapa Kargo Project, Config, Warehouse, PromotionTask och Stages
+kubectl apply -f kargo.yaml
 
 ### Exponera Kargo server lokalt (port-forward)
 kubectl port-forward --namespace kargo svc/kargo-api 3000:443
