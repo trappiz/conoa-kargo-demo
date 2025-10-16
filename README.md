@@ -11,7 +11,6 @@ helm repo add jetstack https://charts.jetstack.io
 helm repo update
 
 ### Installera cert-manager (inklusive CRDs)
-```bash
 helm install cert-manager jetstack/cert-manager \
   --create-namespace \
   --namespace cert-manager \
