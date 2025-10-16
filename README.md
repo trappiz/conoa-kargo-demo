@@ -19,6 +19,7 @@ helm install cert-manager jetstack/cert-manager \
 
 ### Kontrollera status
 kubectl -n cert-manager get pods
+```
 
 # ArgoCD install
 ### Skapa namespace för Argo CD
