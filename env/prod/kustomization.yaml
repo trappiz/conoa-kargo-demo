@@ -7,4 +7,4 @@ commonLabels:
   env: prod
 images:
 - name: quay.io/ceph/nginx
-  newTag: 1.27.3
+  newTag: 1.27.0
